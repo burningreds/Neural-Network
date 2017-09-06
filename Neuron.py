@@ -5,9 +5,9 @@ import numpy as np
 # Perceptron class
 # Default weights and bias
 class Neuron:
-    def __init__(self, nInputs):
+    def __init__(self, nInputs, learningRate):
         self.weights = [(random.uniform(-1, 1)) for i in range(0, nInputs)]
-        self.learningRate = 0.5
+        self.learningRate = learningRate
         self.bias = 0.5
         self.error = 0
         self.delta = 0

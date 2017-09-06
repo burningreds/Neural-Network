@@ -2,9 +2,10 @@ from NeuronLayer import NeuronLayer
 
 
 class NeuralNetwork:
-    def __init__(self):
+    def __init__(self, learningRate):
         self.layers = []
         self.nInputs = 0
+        self.learningRate = learningRate
 
     def setNumberOfInputs(self, n):
         self.nInputs = n
@@ -22,7 +23,7 @@ class NeuralNetwork:
         if len(self.layers) > 0:
             prev = self.getOutputLayer()
             nInputs = prev.getN()
-        self.layers.append(NeuronLayer(n, nInputs, prev))
+        self.layers.append(NeuronLayer(n, nInputs, prev, self.learningRate))
 
     # Operation that consists in providing a set of inputs to
     # the network, and obtain a set of outputs
@@ -58,7 +59,6 @@ class NeuralNetwork:
     def test(self, input, desOut):
         output = self.feed(input)
         actualOutput = max(xrange(len(output)), key=lambda x: output[x])
-        print actualOutput
         if desOut == actualOutput:
             return 1
         return 0

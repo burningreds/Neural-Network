@@ -2,8 +2,8 @@ from Neuron import Neuron
 
 
 class NeuronLayer:
-    def __init__(self, n, nInputs, prev):
-        self.neurons = self.generateNeurons(n, nInputs)
+    def __init__(self, n, nInputs, prev, learningRate):
+        self.neurons = self.generateNeurons(n, nInputs, learningRate)
         self.nextLayer = None
         self.previousLayer = prev
         self.nInputs = nInputs
@@ -13,10 +13,10 @@ class NeuronLayer:
 
     # Returns a list of n neurons
     # Each neuron needs to know how many inputs it receives
-    def generateNeurons(self, n, nInputs):
+    def generateNeurons(self, n, nInputs, learningRate):
         neurons = []
         for i in range(0, n):
-            neurons.append(Neuron(nInputs))
+            neurons.append(Neuron(nInputs, learningRate))
         return neurons
 
     def isOutputLayer(self):
