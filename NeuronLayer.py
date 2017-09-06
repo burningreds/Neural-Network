@@ -7,10 +7,12 @@ class NeuronLayer:
         self.nextLayer = None
         self.previousLayer = prev
         self.nInputs = nInputs
-        self.n = n
+        self.n = n #number of neurons
         if not self.previousLayer is None:
             self.previousLayer.setNextLayer(self)
 
+    # Returns a list of n neurons
+    # Each neuron needs to know how many inputs it receives
     def generateNeurons(self, n, nInputs):
         neurons = []
         for i in range(0, n):
@@ -44,15 +46,20 @@ class NeuronLayer:
     def getOutputs(self):
         return map(lambda n: n.getOutput(), self.getNeurons())
 
+    # Feeds the neurons in the layer with the input
     def feed(self, input):
         myOut = map(lambda x: x.operate(input), self.getNeurons())
+        # If it's not the last layer, continue with the next
         if not self.isOutputLayer():
             return self.nextLayer.feed(myOut)
+        # If it's the last layer, return output
         return myOut
 
+    # Backward-propagates the error
+    # There are 2 cases: output layer or a hidden layer
     def errorBackpropagation(self, desOut):
         if self.isOutputLayer():
-            error = map(lambda n, o : o - n.output, self.getNeurons(), desOut)
+            error = map(lambda n, o : o - n.getOutput(), self.getNeurons(), desOut)
         else:
             error = map (
                 lambda i : sum( map (
@@ -63,6 +70,7 @@ class NeuronLayer:
         if not self.isInputLayer():
             self.previousLayer.errorBackpropagation(desOut)
 
+    # Updates weights and bias for every neuron in the layer
     def update(self, input):
         map(lambda n : n.update(input), self.getNeurons())
         if not self.isOutputLayer():
