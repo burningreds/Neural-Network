@@ -2,7 +2,7 @@ import time
 from NeuralNetwork import *
 
 def main():
-    neuralNetwork = NeuralNetwork(0.1)
+    neuralNetwork = NeuralNetwork(0.4)
     neuralNetwork.setNumberOfInputs(64)
     neuralNetwork.addLayer(35)
     neuralNetwork.addLayer(35)
@@ -15,7 +15,7 @@ def main():
     print "testing"
     testClassifier(neuralNetwork, test)
     end = time.time()
-    print(end - start)
+    print "Tiempo de ejecucion: " + str(end - start)
 
 
 def trainClassifier(neuralNetwork, training, epochs):
@@ -38,7 +38,7 @@ def testClassifier(neuralNetwork, test):
         output = int(lineArray[-1])
         successCount += neuralNetwork.test(input, output)
         total += 1
-    print successCount * 1.0 / total
+    print "Tasa de exito: " + str(successCount * 1.0 / total)
 
 
 if __name__ == "__main__":
